@@ -1,0 +1,18 @@
+version: 64.0.0-CI{build}
+image: Visual Studio 2017
+configuration: Release
+platform: Any CPU
+install:
+- git submodule update --init --recursive
+- cmd: >-
+    dotnet restore
+build_script:
+- cmd: msbuild DSerfozo.CefGlue.sln /t:Build;Pack /p:Configuration=Release /p:BuildNumber=%APPVEYOR_BUILD_NUMBER% /p:ProjectOutputPath=%cd%\dist
+artifacts:
+- path: src\DSerfozo.CefGlue\bin\Release\DSerfozo.CefGlue*.nupkg
+deploy:
+- provider: NuGet
+  server: https://www.myget.org/F/dserfozo/api/v2/package
+  api_key:
+    secure: ibHoIgBca+Soq6sDbpcf0KDmNKqBccbvVMTcxSvc3GogObcrWsgkXhQrIo/1lV2o
+  skip_symbols: true
