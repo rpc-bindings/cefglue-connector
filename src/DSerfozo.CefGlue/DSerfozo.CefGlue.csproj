@@ -5,8 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DSerfozo.CefGlue.Contract" Version="1.0.0-CI1" />
+    
     <PackageReference Include="DSerfozo.Unofficial.Xilium.CefGlue" Version="64.0.0" />
   </ItemGroup>
+
+ <Choose>
+    <When Condition="'$(IsInAllRepo)' == 'True'">
+      <ItemGroup>
+        <ProjectReference Include="..\..\..\cefglue-contract\src\DSerfozo.CefGlue.Contract\DSerfozo.CefGlue.Contract.csproj" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <PackageReference Include="DSerfozo.CefGlue.Contract" Version="1.0.0-CI1" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
 
 </Project>
